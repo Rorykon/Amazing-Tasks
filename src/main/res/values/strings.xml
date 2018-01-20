@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MyAmazingTasks</string>
+    <string name="dialog_message">Finished with this task!?</string>
+    <string name="dialog_title">MyAmazingTasks</string>
+    <string name="ok">Yes!</string>
+    <string name="cancel">Nope :/</string>
+    <string name="hint">Enter a new task!</string>
+    <string name="addTask">Add Task</string>
+    <string name="yay">Yay!!</string>
+
+</resources>
