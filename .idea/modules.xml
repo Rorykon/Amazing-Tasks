@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../AndroidStudioProjects.iml" filepath="$PROJECT_DIR$/../AndroidStudioProjects.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app.iml" filepath="$PROJECT_DIR$/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Amazing-Tasks.iml" filepath="$PROJECT_DIR$/Amazing-Tasks.iml" />
+      <module fileurl="file://K:\Dev\AndroidStudioProjects.iml" filepath="K:\Dev\AndroidStudioProjects.iml" />
     </modules>
   </component>
 </project>
