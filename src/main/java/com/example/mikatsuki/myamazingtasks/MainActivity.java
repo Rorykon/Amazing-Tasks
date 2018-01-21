@@ -188,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
 
+
         wmlp.gravity = Gravity.TOP | Gravity.CENTER;
         //wmlp.x = 100;   //x position
         // wmlp.y = 100;   //y position
@@ -218,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("MyTagGoesHere", "count is" + count);
         Log.d("MyTagGoesHere", "halfCount is" + halfCount);
+
     }
 
     public void cheers() {
@@ -225,18 +227,32 @@ public class MainActivity extends AppCompatActivity {
 
         // Load the ImageView that will host the animation and
         // set its background to our AnimationDrawable XML resource.
-        ImageView img = (ImageView)findViewById(R.id.cheering);
+        final ImageView img = findViewById(R.id.cheering);
         img.setBackgroundResource(R.drawable.animation);
-
+        img.setVisibility(View.VISIBLE);
         // Get the background, which has been compiled to an AnimationDrawable object.
-        AnimationDrawable frameAnimation = (AnimationDrawable) img.getBackground();
+        final AnimationDrawable frameAnimation = (AnimationDrawable) img.getBackground();
         img.bringToFront();
 
         // Start the animation (looped playback by default).
-        frameAnimation.isOneShot();
+
         frameAnimation.start();
 
-        frameAnimation.stop();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+
+                frameAnimation.stop();
+                img.setVisibility(View.INVISIBLE);
+
+
+
+            }
+        }, 4000);
+
+
+
 
 
 
