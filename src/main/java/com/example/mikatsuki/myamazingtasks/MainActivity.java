@@ -1,7 +1,7 @@
 package com.example.mikatsuki.myamazingtasks;
 
 
-import android.animation.Animator;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,10 +15,12 @@ import android.view.View;
 
 import android.view.Window;
 import android.view.WindowManager;
+
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.FrameLayout;
+
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // ADD HERE
+        //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         lvItems = findViewById(R.id.lvItems);
         items = new ArrayList<>();
         readItems();
@@ -77,12 +80,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onAddItem(View v) {
+
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputMethodManager != null) {
+            //noinspection ConstantConditions
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+
+
         EditText etNewItem = findViewById(R.id.etNewItem);
         etNewItem.bringToFront();
         String itemText = etNewItem.getText().toString();
         itemsAdapter.add(itemText);
         etNewItem.setText("");
         writeItems();
+
         moodChanger();
 
     }
@@ -113,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @SuppressWarnings("unchecked")
     private void readItems() {
         File filesDir = getFilesDir();
         File todoFile = new File(filesDir, "todo.txt");
@@ -195,7 +208,8 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
+
+        @SuppressWarnings("ConstantConditions") WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
 
 
         wmlp.gravity = Gravity.TOP | Gravity.CENTER;
@@ -282,6 +296,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 }
 
 

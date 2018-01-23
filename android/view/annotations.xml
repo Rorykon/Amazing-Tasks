@@ -1,0 +1,5 @@
+<root>
+    <item name='android.view.Window android.view.WindowManager.LayoutParams getAttributes()'>
+        <annotation name='android.support.annotation.NonNull' />
+    </item>
+</root>
