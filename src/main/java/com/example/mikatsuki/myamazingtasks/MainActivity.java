@@ -59,12 +59,15 @@ public class MainActivity extends AppCompatActivity {
                 myView.setScaleType(ImageView.ScaleType.FIT_XY);
                // myView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 //myView.setAdjustViewBounds(true);
+                myView.setClickable(false);
 
 
                 myView.setLayoutParams(new
                         ImageSwitcher.LayoutParams(ImageSwitcher.LayoutParams.MATCH_PARENT,
                         ImageSwitcher.LayoutParams.MATCH_PARENT));
+                myView.requestFocus();
                 return myView;
+
             }
         });
 
