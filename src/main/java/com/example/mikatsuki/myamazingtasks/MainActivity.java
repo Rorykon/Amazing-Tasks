@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -55,10 +56,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public View makeView() {
                 ImageView myView = new ImageView(getApplicationContext());
-                myView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                myView.setScaleType(ImageView.ScaleType.FIT_XY);
+               // myView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                //myView.setAdjustViewBounds(true);
+
+
                 myView.setLayoutParams(new
-                        ImageSwitcher.LayoutParams(ImageSwitcher.LayoutParams.WRAP_CONTENT,
-                        ImageSwitcher.LayoutParams.WRAP_CONTENT));
+                        ImageSwitcher.LayoutParams(ImageSwitcher.LayoutParams.MATCH_PARENT,
+                        ImageSwitcher.LayoutParams.MATCH_PARENT));
                 return myView;
             }
         });
@@ -70,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onAddItem(View v) {
         EditText etNewItem = findViewById(R.id.etNewItem);
+        etNewItem.bringToFront();
         String itemText = etNewItem.getText().toString();
         itemsAdapter.add(itemText);
         etNewItem.setText("");

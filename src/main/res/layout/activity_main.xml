@@ -10,46 +10,80 @@
         android:id="@+id/lvItems"
         android:layout_width="wrap_content"
         android:layout_height="250dp"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/etNewItem"
-        android:layout_alignTop="@+id/btnAddItem"
-        android:hint="@string/hint"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/btnAddItem"
-        android:layout_alignParentBottom="true" />
+       >
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/addTask"
-        android:id="@+id/btnAddItem"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="onAddItem" />
+    </ListView>
+
+    <ImageSwitcher
+        android:id="@+id/IS"
+
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:layout_above="@+id/layout1"
+
+
+
+
+        >
+
+
+    </ImageSwitcher>
 
     <ImageView
         android:id="@+id/cheering"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/etNewItem"
-        android:layout_below="@+id/lvItems"
-        android:layout_centerHorizontal="true"
+        android:layout_height="210dp"
+
+        android:layout_above="@+id/layout1"
+
+        android:contentDescription="@string/yay"
         android:visibility="visible" />
 
-    <ImageSwitcher
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/etNewItem"
-        android:layout_below="@+id/lvItems"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/IS">
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout1"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
 
-    </ImageSwitcher>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true">
 
+
+        <EditText
+            android:id="@+id/etNewItem"
+            android:layout_width="276dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/btnAddItem"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toStartOf="@+id/btnAddItem"
+            android:hint="@string/hint"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnAddItem"
+            android:layout_width="wrap_content"
+            android:layout_height="43dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:onClick="onAddItem"
+            android:text="@string/addTask"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/etNewItem"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </android.support.constraint.ConstraintLayout>
 
 
 </RelativeLayout>
