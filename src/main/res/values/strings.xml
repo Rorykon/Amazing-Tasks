@@ -1,11 +1,13 @@
 <resources>
-    <string name="app_name">MyAmazingTasks</string>
+    <string name="app_name">Tasks with Sagiri</string>
     <string name="dialog_message">Finished with this task!?</string>
-    <string name="dialog_title">MyAmazingTasks</string>
+    <string name="dialog_title">Tasks with Sagiri</string>
     <string name="ok">Yes!</string>
     <string name="cancel">Nope :/</string>
     <string name="hint">Enter a new task!</string>
     <string name="addTask">Add Task</string>
     <string name="yay">Yay!!</string>
+    <string name="gifOn">Turn on Animations</string>
+    <string name="gifOff">Turn off Animations</string>
 
 </resources>

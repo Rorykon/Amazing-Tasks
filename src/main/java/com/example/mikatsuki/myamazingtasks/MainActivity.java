@@ -1,67 +1,62 @@
 package com.example.mikatsuki.myamazingtasks;
-
-
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
-
 import android.view.Window;
 import android.view.WindowManager;
-
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
-
 import org.apache.commons.io.FileUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import pl.droidsonroids.gif.GifDrawable;
+import pl.droidsonroids.gif.GifImageView;
 
 public class MainActivity extends AppCompatActivity {
     private ArrayList<String> items;
     private ArrayAdapter<String> itemsAdapter;
     private ListView lvItems;
     private ImageSwitcher sw;
+    int imageIds[] = {R.drawable.cheersa, R.drawable.sagirihappy, R.drawable.concernsa, R.drawable.sagirihopefulstat, R.drawable.angrys1, R.drawable.doorclosed};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar myToolbar =  findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
         // ADD HERE
-        //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         lvItems = findViewById(R.id.lvItems);
         items = new ArrayList<>();
         readItems();
-        itemsAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, items);
+        itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
         setupListViewListener();
-
-
         sw = findViewById(R.id.IS);
+
         sw.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
             public View makeView() {
                 ImageView myView = new ImageView(getApplicationContext());
-                myView.setScaleType(ImageView.ScaleType.FIT_XY);
-               // myView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                //myView.setAdjustViewBounds(true);
+                //myView.setScaleType(ImageView.ScaleType.FIT_XY);
+                myView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                myView.setAdjustViewBounds(true);
                 myView.setClickable(false);
 
 
@@ -79,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     public void onAddItem(View v) {
 
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -86,16 +82,13 @@ public class MainActivity extends AppCompatActivity {
             //noinspection ConstantConditions
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
-
-
         EditText etNewItem = findViewById(R.id.etNewItem);
         etNewItem.bringToFront();
         String itemText = etNewItem.getText().toString();
         itemsAdapter.add(itemText);
         etNewItem.setText("");
         writeItems();
-
-        moodChanger();
+        moodChanger1();
 
     }
 
@@ -111,13 +104,8 @@ public class MainActivity extends AppCompatActivity {
                                     int pos,
                                     long id) {
                 //Change image to Curious
-                sw.setImageResource(R.drawable.curious);
+                sw.setImageResource(imageIds[3]);
                 dialog(pos);
-
-
-                // Remove the item within array at position
-                //items.remove(pos);
-                // Refresh the adapter
 
             }
         });
@@ -168,20 +156,11 @@ public class MainActivity extends AppCompatActivity {
                 // Return true consumes the long click event (marks it handled)
                 writeItems(); // <---- Add this line
 
-                //Happy Message
-                Context context = getApplicationContext();
-                CharSequence text = "Yay!!";
-                int duration = Toast.LENGTH_SHORT;
 
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-
-                //sw.setImageResource(R.drawable.cheers);
                 cheers();
 
 
                 //Changes image back to default
-                //sw.setImageResource(R.drawable.happy);
                 moodChanger();
             }
         });
@@ -213,8 +192,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         wmlp.gravity = Gravity.TOP | Gravity.CENTER;
-        //wmlp.x = 100;   //x position
-        // wmlp.y = 100;   //y position
         dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         dialog.getWindow().setAttributes(wmlp);
         dialog.show();
@@ -225,88 +202,117 @@ public class MainActivity extends AppCompatActivity {
     public void moodChanger() {
 
         //Default Image
-        //sw.setImageResource(R.drawable.happy);
-
-
         float count = lvItems.getCount();
-        float halfCount = count / 2;
+            if (count == 0) {
+                sw.setImageResource(imageIds[0]);
+            } else if (count <= 3.0) {
+                sw.setImageResource(imageIds[1]);
+            } else if (count <= 4.0) {
+                sw.setImageResource(imageIds[2]);
+            } else if (count <= 6.0) {
+                sw.setImageResource(imageIds[4]);
+            } else if (count == 7.0) {
+                sw.setImageResource(imageIds[5]);
+            } else if (count >= 8.0) {
 
+                sw.setImageResource(imageIds[5]);
+            }
+        }
 
-        if (count <= 2) {
-            sw.setImageResource(R.drawable.happy);
-        } else if (count <= 4.9) {
-            sw.setImageResource(R.drawable.concerned);
-        } else if (count >= 5.0) {
-            sw.setImageResource(R.drawable.angry);
-        } else return;
+    //Avoids Angry gif when deleting tasks
+    public void moodChanger1() {
 
-        Log.d("MyTagGoesHere", "count is" + count);
-        Log.d("MyTagGoesHere", "halfCount is" + halfCount);
+        //Default Image
+        float count = lvItems.getCount();
 
+        if (count == 0) {
+            sw.setImageResource(imageIds[0]);
+        } else if (count <= 3.0) {
+            sw.setImageResource(imageIds[1]);
+        } else if (count <= 5.0) {
+            sw.setImageResource(imageIds[2]);
+        } else if (count <= 6.0) {
+            sw.setImageResource(imageIds[4]);
+        } else if (count == 8.0) {
+            disappointed();
+            sw.setImageResource(imageIds[5]);
+        } else if (count >= 8.0) {
+
+            sw.setImageResource(imageIds[5]);
+        }
     }
 
     public void cheers() {
-
-
         // Load the ImageView that will host the animation and
         // set its background to our AnimationDrawable XML resource.
-        final ImageView img = findViewById(R.id.cheering);
-        img.setBackgroundResource(R.drawable.animation);
+        final GifImageView img = findViewById(R.id.cheeringView);
+        img.setBackgroundResource(R.drawable.cheer);
         img.setVisibility(View.VISIBLE);
-        // Get the background, which has been compiled to an AnimationDrawable object.
-        final AnimationDrawable frameAnimation = (AnimationDrawable) img.getBackground();
-        img.bringToFront();
+
+        // Get the background, which has been compiled to an GifDrawable object.
+        final GifDrawable newGif = (GifDrawable) img.getBackground();
 
         // Start the animation (looped playback by default).
-
-        frameAnimation.start();
+        newGif.start();
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
 
-                frameAnimation.stop();
+                newGif.stop();
                 img.setVisibility(View.INVISIBLE);
 
 
+            }
+        }, 800);
+
+    }
+
+    public void disappointed() {
+        //Angry Message
+        Context context = getApplicationContext();
+        CharSequence text = "Too many tasks...BAKA";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+        // Load the ImageView that will host the animation and
+        // set its background to our AnimationDrawable XML resource.
+
+        final GifImageView img1 = findViewById(R.id.madView);
+        img1.setBackgroundResource(R.drawable.angrys);
+        img1.setVisibility(View.VISIBLE);
+
+        // Get the background, which has been compiled to an GifDrawable object.
+        final GifDrawable newGif = (GifDrawable) img1.getBackground();
+
+        // Start the animation (looped playback by default).
+        newGif.start();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+
+                newGif.stop();
+                img1.setVisibility(View.INVISIBLE);
+
 
             }
-        }, 1800);
-
-
-
-
-
-
-
-           /* sw.postDelayed(new Runnable()
-            {
-                int i = 0;
-                public void run() {
-                    sw.setImageResource(
-                            i++ % 2 == 1 ?
-                                    R.drawable.cheers:
-                                    R.drawable.curious);
-
-
-                    sw.postDelayed(this, 1000);
-                }
-            }, 1000);*/
+        }, 3000);
 
 
     }
+
 
 }
 
 
 
 
-            /*sw.setImageResource(R.drawable.cheers);
-            sw.setImageResource(R.drawable.curious);
-            sw.setImageResource(R.drawable.cheers);
-            sw.setImageResource(R.drawable.curious);
-            Log.d("MyTagGoesHere", "cheers is working?");*/
+
 
 
 
